@@ -1,0 +1,39 @@
+<web-app version="6.0"
+	xmlns="https://jakarta.ee/xml/ns/jakartaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Alta y baja de empleados</web-resource-name>
+			<url-pattern>/api/empleados/*</url-pattern>
+			<http-method>DELETE</http-method>
+			<http-method>POST</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>recursosHumanos</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Listar tareas de empleados</web-resource-name>
+			<url-pattern>/api/tareas</url-pattern>
+			<http-method>GET</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>gerente</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>ApplicationRealm</realm-name>
+	</login-config>
+
+	<security-role>
+		<role-name>gerente</role-name>
+		<role-name>recursosHumanos</role-name>
+	</security-role>
+
+</web-app>
