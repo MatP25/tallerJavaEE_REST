@@ -187,6 +187,21 @@
             <scope>test</scope>
         </dependency>
 
+
+        <!-- 
+            1. incluir estas dependencias de swagger  
+            2. descargar el standalone de swagger UI de: 
+                https://github.com/swagger-api/swagger-ui?tab=readme-ov-file
+            3. extraer la carpeta /dist y pegarla dentro de la carpeta /webapp de la aplicacion
+            4. modificar el archivo swagger-initializer.js de la carpeta, 
+                en el campo url del objeto modificar el valor por la url con la ruta de la app y la ubicacion donde se quiere el archivo openapi.json
+                en este caso:
+                url: "http://localhost:8080/api/openapi.json"
+            5. acceder al archivo index.html en:
+                {appurl}/{ruta}/dist 
+                en este caso: 
+                http://localhost:8080/swagger/dist/
+        -->
         <dependency>
 			<groupId>io.swagger.core.v3</groupId>
 			<artifactId>swagger-jaxrs2-jakarta</artifactId>
@@ -199,28 +214,28 @@
 		</dependency>
 
         <!-- https://mvnrepository.com/artifact/jakarta.json/jakarta.json-api -->
-        <dependency>
+        <!-- <dependency>
             <groupId>jakarta.json</groupId>
             <artifactId>jakarta.json-api</artifactId>
             <version>2.1.3</version>
-        </dependency>
+        </dependency> -->
 
         <!-- https://mvnrepository.com/artifact/jakarta.json.bind/jakarta.json.bind-api -->
         <!-- Jakarta Jsonb: Permite el bind de objetos java para que sean serializables a json -->
-        <dependency>
+        <!-- <dependency>
             <groupId>jakarta.json.bind</groupId>
             <artifactId>jakarta.json.bind-api</artifactId>
             <version>3.0.1</version>
-        </dependency>
+        </dependency> -->
 
         <!-- https://mvnrepository.com/artifact/org.eclipse/yasson -->
         <!-- implementacion de jsonb -->
-        <dependency>
+        <!-- <dependency>
             <groupId>org.eclipse</groupId>
             <artifactId>yasson</artifactId>
             <version>3.0.4</version>
             <scope>compile</scope>
-        </dependency>
+        </dependency> -->
     </dependencies>
 
     <build>

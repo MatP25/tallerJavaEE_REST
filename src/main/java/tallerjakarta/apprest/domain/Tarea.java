@@ -2,11 +2,18 @@ package tallerjakarta.apprest.domain;
 
 import java.time.LocalDateTime;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import tallerjakarta.apprest.adapters.LocalDateTimeAdapter;
+
+@XmlRootElement
 public class Tarea {
-   private long id;
-   private String descripcion;
-   private LocalDateTime fechaIni;
-   private LocalDateTime fechaFin;
+    private long id;
+    private String descripcion;
+    @XmlJavaTypeAdapter(value = LocalDateTimeAdapter.class)
+    private LocalDateTime fechaIni;
+    @XmlJavaTypeAdapter(value = LocalDateTimeAdapter.class)
+    private LocalDateTime fechaFin;
 
    public Tarea() {}
 

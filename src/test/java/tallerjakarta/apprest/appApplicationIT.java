@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.net.URI;
 
+import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -188,8 +189,8 @@ public class appApplicationIT {
     @DisplayName("Test: POST Agregar nueva tarea a un empleado.")
     public void agregarNuevaTarea() {
         System.out.println("Agregando una nueva tarea a un empleado existente...");
-        URI uri = URI.create(baseUrl + "/tareas");
-        String jsonBody = "{\"cedula\": \"12345678\",\"descripcion\": \"nueva tarea\",\"fechaIni\": \"2025-04-04T22:07:33.342090995\",\"fechaFin\": \"2025-04-11T22:08:37.636882532\"}";
+        URI uri = URI.create(baseUrl + "/tareas?cedula-empleado=12345678");
+        String jsonBody = "{\"descripcion\": \"nueva tarea\",\"fechaIni\": \"2025-04-04T22:07:33.342090995\",\"fechaFin\": \"2025-04-11T22:08:37.636882532\"}";
         Client apiClient = ClientBuilder.newClient();
 
         Response response = apiClient
@@ -201,12 +202,17 @@ public class appApplicationIT {
         assertEquals(responseCode, 204);
     }
 
+
+    /*
+     * to do:
+     * capturar las excepciones que ocurren al deserializar un json invalido desde el cliente rest
+     */
     @Test
     @DisplayName("Test: POST Intentando agregar una nueva tarea con un formato de fecha incorrecto.")
     public void agregarNuevaTareaDatosInvalidos() {
         System.out.println("Intentando agregar una nueva tarea con un formato de fecha incorrecto...");
-        URI uri = URI.create(baseUrl + "/tareas");
-        String jsonBody = "{\"cedula\": \"12345678\",\"descripcion\": \"nueva tarea\",\"fechaIni\": \"2025-04-04\",\"fechaFin\": \"2025-04-11\"}";
+        URI uri = URI.create(baseUrl + "/tareas?cedula-empleado=12345678");
+        String jsonBody = "{\"descripcion\": \"nueva tarea\",\"fechaIni\": \"2025-04-04\",\"fechaFin\": \"2025-04-11\"}";
         Client apiClient = ClientBuilder.newClient();
 
         Response response = apiClient
@@ -215,15 +221,15 @@ public class appApplicationIT {
             .post(Entity.json(jsonBody));
 
         int responseCode = response.getStatus();
-        assertEquals(responseCode, 500);
+        assertEquals(responseCode, 400);
     }
 
     @Test
     @DisplayName("Test: POST Intentar agregar una nueva tarea a un empleado inexistente.")
     public void agregarNuevaTareaAEmpleadoInexistente() {
         System.out.println("Intentando agregar una nueva tarea a un empleado inexistente...");
-        URI uri = URI.create(baseUrl + "/tareas");
-        String jsonBody = "{\"cedula\": \"123\",\"descripcion\": \"nueva tarea\",\"fechaIni\": \"2025-04-04T22:07:33.342090995\",\"fechaFin\": \"2025-04-11T22:08:37.636882532\"}";
+        URI uri = URI.create(baseUrl + "/tareas?cedula-empleado=123");
+        String jsonBody = "{\"descripcion\": \"nueva tarea\",\"fechaIni\": \"2025-04-04T22:07:33.342090995\",\"fechaFin\": \"2025-04-11T22:08:37.636882532\"}";
         Client apiClient = ClientBuilder.newClient();
 
         Response response = apiClient

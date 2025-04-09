@@ -2,6 +2,9 @@ package tallerjakarta.apprest.domain;
 
 import java.util.List;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Empleado {
     private long id;
     private String nombre;
