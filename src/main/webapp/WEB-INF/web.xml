@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
 
-	<security-constraint>
+	<!-- <security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Alta y baja de empleados</web-resource-name>
 			<url-pattern>/api/empleados/*</url-pattern>
@@ -34,6 +34,6 @@
 	<security-role>
 		<role-name>gerente</role-name>
 		<role-name>recursosHumanos</role-name>
-	</security-role>
+	</security-role> -->
 
 </web-app>

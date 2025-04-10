@@ -5,7 +5,6 @@ import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.json.JsonObject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -30,6 +29,7 @@ public class appEndpoint {
     @Path("/empleados")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEmpleados() {
+
         return Response
             .ok(service.getEmpleados(), MediaType.APPLICATION_JSON)
             .build();
@@ -55,22 +55,10 @@ public class appEndpoint {
     @Path("/empleados")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response agregarEmpleado(JsonObject body) {
-
-        String nombre = null, cedula = null;
-        try {
-            nombre = body.getString("nombre");
-            cedula = body.getString("cedula");
-        } catch (Exception e) {
-            return Response
-            .serverError()
-            .entity("{\"error\": \"Error al procesar la solicitud, verifique los datos enviados.\"}")
-            .status(500)
-            .build();        
-        }
+    public Response agregarEmpleado(Empleado empleado) {
         
         try {
-            service.agregarEmpleado(nombre, cedula);
+            service.agregarEmpleado(empleado.getNombre(), empleado.getCedula());
             return Response
                 .status(201)
                 .build();
@@ -106,32 +94,19 @@ public class appEndpoint {
     @Path("/tareas")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response agregarTarea(JsonObject body) {
-        String cedula = null, descripcion = null, strFechaIni = null, strFechaFin = null;
-
+    public Response agregarTarea(Tarea tarea, @QueryParam("cedula-empleado") String cedula) {
+        String descripcion = null;
+        LocalDateTime fechaIni = null, fechaFin = null;
         try {
-            cedula = body.getString("cedula");
-            descripcion = body.getString("descripcion");
-            strFechaIni = body.getString("fechaIni");
-            strFechaFin = body.getString("fechaFin");
+            descripcion = tarea.getDescripcion();
+            fechaIni = tarea.getFechaIni();
+            fechaFin = tarea.getFechaFin();
         } catch (Exception e) {
             return Response
             .serverError()
             .entity("{\"error\": \"Error al procesar la solicitud, verifique los datos enviados.\"}")
             .status(500)
             .build();        
-        }
-
-        LocalDateTime fechaIni, fechaFin;
-        try {
-            fechaIni = LocalDateTime.parse(strFechaIni);
-            fechaFin = LocalDateTime.parse(strFechaFin);
-        } catch (Exception e) {
-            return Response
-            .serverError()
-            .entity("{\"error\": \"Error al procesar la fecha, verifique los datos enviados.\"}")
-            .status(500)
-            .build();         
         }
 
         try {
